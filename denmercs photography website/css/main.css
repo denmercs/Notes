@@ -1,0 +1,64 @@
+/* Mobile Layout */
+
+*, *:before, *:after {
+    box-sizing: border-box;
+    font-family: 'Saira', Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+.logo {
+    width: 95px;
+    height: 75px;
+}
+
+#navbarNav {
+    margin-right: 0px;
+    padding: 0 .5em;
+}
+
+.nav-link {
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+}
+
+    a.nav-link {
+        color: #fff;
+    }
+
+.navbar {
+    background-color: rgba(0,0,0, .75);
+    background-repeat: no-repeat;
+
+}
+
+    .navbar-toggler-icon {
+        color: #fff;
+    }
+
+div.imageOne img {
+    background-size: cover;
+    max-width: 100%;
+}
+
+
+.scrollDown {
+    color: #fff;
+    margin-top: -5em;
+    margin-left: 5em;
+}
+
+    .scrollDown h3 {
+        font-size: .75em;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+
+    .scrollDown .fa-angle-double-down {
+        margin-left: 1.4em;
+        font-size: 1.5em;
+    }
+
+.jumbotron {
+    clear: both;
+}
