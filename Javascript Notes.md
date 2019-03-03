@@ -1,4 +1,290 @@
-**JAVSCRIPT**
+# JAVSCRIPT
+
+# ES5 - ES6
+
+![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190302182058321.png)
+
+
+
+1. Variables 
+
+   ```javascript
+   / ES5 Version
+   
+   var name5 = 'Jane Smith';
+   va age5 = 23;
+   name5 = 'Jane Miller';
+   console.log(name5); // Jane Miller
+   
+   // ES6 Version
+   const name6 = 'Jane Smith';
+   let age6 = 23;
+   name6 = 'Jane Miller';
+   console.log(name6); // ERROR result since it's constant
+   ```
+
+2. Functions
+
+   ```javascript
+   //ES5
+   function driversLicense(passedTest){
+       if(passedTest) {
+           var firstName = 'John';
+           var yearOfBirth = 1990;
+           
+           console.log(firstName + ', born in ' + yearOfBirth + ', yes!');
+       }
+   }
+   
+   driversLicense(true);
+   
+   //ES6
+   function driversLicense(passedTest){
+       if(passedTest) {
+           let firstName = 'John';
+           const yearOfBirth = 1990;
+           
+           console.log(firstName + ', born in ' + yearOfBirth + ', yes!');
+       }
+   }
+   
+   
+   
+   ```
+
+   
+
+3. Blocks
+
+   ```javascript
+   // Blocks and IIFEs
+   
+   // ES5
+   (function() {
+       var c = 3; 
+   })();
+   
+   // ES6
+   { 
+   	const a = 1;
+   	let b = 2;
+   }
+   
+   console.log(a + b);
+   ```
+
+4. Strings
+
+   ```javascript
+   let firstName = 'John';
+   let lastName = 'Smith';
+   const yearOfBirth = 1990;
+   
+   function calcAge(year) {
+       return 2016 - year;
+   }
+   
+   // ES5
+   console.log('This is ' + firstName + ' ' + lastname + '. born in ' + yearOfbirth + ' He is ' + calcAge(yearOfBirth) + 'year old');
+   
+   // ES6
+   console.log(`This is ${firstName} ${lastname} born in ${yearOfbirth}. He is ${calcAge(yearOfBirth)} year old`);
+   
+   const n = `${firstName} ${lastName}`;
+   console.log(n.startWith('j')); // false
+   console.log(n.endsWith('Sm'));
+   console.log(n.includes('oh'));
+   console.log(`${firstName}`.repeat(5));
+   ```
+
+5. Arrow Functions
+
+   ```javascript
+   const years = [1990, 1965, 1982, 1937];
+   
+   //ES5
+   var ages5 = years.map(function(el) {
+       return 2016 - el;
+   });
+   console.log(age5);
+   
+   //ES6
+   let age6 = years.map(el => 2016 - el);
+   console.log(ages6);
+   
+   ages6  = years.map((el, index) => `Age element ${index + 1}: ${2016-el}.`);;
+   console.log(ages6);
+   
+   ages6 = years.map((el, index) => {
+       const now = new Date().getFullYear();
+       const age = now - el;
+       return `Age element ${index + 1}: ${age}`;
+   });
+   console.log(ages6);
+   
+   
+   /** Arrow functions doesn't have a this keyword they use the functions this keyword **/
+   
+   //ES5
+   var box5 = {
+       color: 'green',
+       position: 1,
+       clickMe: function() {
+           // This keyword points to the window object so the position and color is 
+           // not defined in window 
+           
+           /** solution: 
+           
+           let self = this;
+           
+           **/
+           document.querySelector('.green').addEventListener('click', function() {
+               var str = 'This is box number ' + this.position + ' and it is ' + 
+                   this.color;
+               alert(str);
+           });
+       }
+   }
+   box5.clickMe(); // This is box number undedfined and it is undefined;
+   
+   //ES6
+   var box6 = {
+       color: 'green',
+       position: 1,
+       clickMe: function() {
+           // This point to the this keyword of the method. It shares the lexical 
+           // keyword to the sorroundings.
+           
+           document.querySelector('.green').addEventListener('click', () => {
+               let str = 'This is box number ' + this.position + ' and it is ' + 
+                   this.color;
+               alert(str);
+           });
+       }
+   }
+   box5.clickMe();
+   
+   
+   //ES5
+   function Person(name) {
+       this.name = name;
+       
+   }
+   
+   Person.prototype.myFriends5 = function(friends) {
+       var arr = friends.map(function(el) {
+           return this.name + ' is friend with ' + el;
+       }).bind(this); // solution
+       
+       console.log(arr);
+   }
+   
+   var friends = ['Bob', 'Jane', 'Mark'];
+   new Person('john').myFriends5(friends);
+   
+   //ES6
+   Person.prototype.myFriends6 = function(friends) {
+       let arr = friends.map(el => `${this.name} is friends with ${el}`);
+       console.log(arr);
+   }
+   new Person('Mike').myFriends6(friends);
+   ```
+
+6. Destructuring 
+
+   ```javascript
+   //ES5
+   var john = ['John', 26];
+   
+   //ES6
+   const [name, age] = ['John', 26];
+   console.log(name);
+   console.log(age);
+   
+   const obj = {
+       firstName: 'John',
+       lastName: 'Smith'
+   };
+   
+   const {firstName, lastName} = obj;
+   console.log(firstName);
+   console.log(lastName);
+   
+   const {firstName: a, lastName: b} = obj;
+   console.log(a);
+   console.log(b);
+   
+   
+   
+   // Practical Use
+   function calcAgeRetirement(year) {
+       const age = new Date().getFullYear() - year;
+       return [age, 65 - age];
+   }
+   
+   const [age, retirement] = calcAgeRetirement(1990);
+   console.log(age);
+   console.log(retirement);
+   ```
+
+   
+
+7. Arrays
+
+   ```javascript
+   const boxes = document.querySelectorAll('.box');
+   
+   //ES5
+   var boxesArr5 = Array.prototype.slice.call(boxes);
+   boxesArr5.forEach(function(cur) {
+      cur.style.background = "blue";
+   });
+   
+   //ES6
+   const boxesArr6 = Array.from(boxes);
+   boxesArr6.forEach(cur => cur.style.backgroundColor = "blue");
+   
+   //LOOP in Array
+   
+   
+   //ES5
+   for(var i = 0; i < boxesArr5.length; i++)  {
+       if (boxesArr5[i].className === "blue") {
+           continue;
+           //break;
+       }
+       
+       boxesArr5[i].textContent = 'I changed to blue';
+   }
+   
+   //ES6
+   for(const item of boxesArr6) {
+       if(item.className.includes("blue")) {
+           continue;
+       }
+       
+       item.textContent = 'I changed to blue';
+   }
+   
+   
+   //ES5
+   var ages = [12,17,8,21,14,11];
+   
+   var full = ages.map(function(cur){
+       return cur >= 18;
+   });
+   console.log(full); //false, false, false, true, false, false
+   full.indexOf(true); //3
+   console.log(ages[full.indexOf(true)]); //21
+   
+   //ES6
+   ages.findIndex(curr => cur >= 18); // 3
+   ages.find(cur => cur >= 18); //21
+   
+   
+   ```
+
+   
 
 
 
@@ -145,6 +431,23 @@ strict mode changes many parts of how JavaScript is executed, where some of the 
 
 **Variable**
 
+```javascript
+// ES5 Version
+
+var name5 = 'Jane Smith';
+va age5 = 23;
+name5 = 'Jane Miller';
+console.log(name5); // Jane Miller
+
+// ES6 Version
+const name6 = 'Jane Smith';
+let age6 = 23;
+name6 = 'Jane Miller';
+console.log(name6); // ERROR result since it's constant
+```
+
+
+
 variable can hold any type of data
 
 ```javascript
@@ -251,6 +554,22 @@ alert(typeof message);
    | toLocalString()                    | returns a string representation of the object that is appropriate for the locale of execution environment |
    | valueOf()                          | Returns a string, number, or boolean equivalent of the object |
    |                                    |                                                              |
+
+   ```javascript
+   // ES6
+   let firstName = 'John';
+   let lastName = 'Smith';
+   const yearOfBirth = 1990;
+   
+   function calcAge(year) {
+       return 2016 - year;
+   }
+   
+   //ES5
+   console.log('This is ' + firstName + ' ' + lastName)
+   ```
+
+   
 
 **Operators**
 
@@ -488,6 +807,51 @@ function functionName(arg0, arg1,...,argN) {
 NOTE: 
 
 Functions cannot be overloaded. functions don't have signatures, because the arguments are represented as an array containing zero or more values. Without function signatures, true overloading is not possible. 
+
+```javascript
+// ES5
+function driversLicense(passedTest) {
+    if(passedTest) {
+        var firstName = 'John';
+        var yearOfBirth = 1990;
+        
+        console.log(firstName + ', born in ' + yearOfBirth +
+                   ', is now officially allowed to drive a car.');
+    }
+}
+
+driversLicense5(true);
+
+// ES6
+function driversLicense(passedTest) {
+    if(passedTest) {
+        let firstName = 'John';
+        const yearOfBirth = 1990;
+        
+        console.log(firstName + ', born in ' + yearOfBirth +
+                   ', is now officially allowed to drive a car.');
+    }
+}
+
+driversLicense6(true);
+```
+
+Blocks and IIFEs
+
+```javascript
+//ES5 
+(function() {
+    var c = 3;
+})();
+
+//ES6
+{
+    const a = 1;
+    let b = 2;
+}
+
+console.log(a + b); // Reference Error
+```
 
 
 
