@@ -2072,3 +2072,129 @@ var stringValue = “hello world”;
 
 
 
+1. Promises
+
+   ```javascript
+   //ES5
+   function getRecipe() {
+       setTimeout(() => {
+           const recipeID = [523, 883, 432, 974];
+   		console.log(recipeID);
+           
+           setTimeout(id => {
+               const recipe = {title: 'Fresh Tomato pasta', 
+                              publisher: 'Jonas'};
+               console.log(`${id}: ${recipe.title}`);
+               
+               setTimeout(publisher => {
+                   const recipe2 = {
+                       title: 'Italian Pizza',
+                       publisher: 'Jonas'
+                   };
+                   console.log(recipe);
+               }, 1500, recipe.publisher);
+           }, 1500, recipeID[2]);
+       }, 1500);
+   }
+   
+   
+   // ES6 -- Promises
+   
+   const getID = new Promise((resolve, reject) => {
+       setTimeout(() => {
+   		resolve([523, 883, 432, 974])		        ;
+       }, 1500);
+   });
+   
+   const getRecipe = recID => {
+       return new Promise((resolve, reject) => {
+           setTimeout(ID => {
+               const recipe = {title: 'Fresh Tomato pasta', 
+                              publisher: 'Jonas'};
+               resolve(`${ID}: ${recipe.title}`);
+           }, 1500, recID);
+       
+       });  
+   };
+   
+   const getRelated = publisher => {
+       return new Promise((resolve, reject) => {
+           setTimeout(pub => {
+               const recipe2 = {
+                       title: 'Italian Pizza',
+                       publisher: 'Jonas'
+                   };
+               resolve(`${pub} ${recipe}`);
+           }, 1500, publisher);        
+       });
+   };
+   
+   // consume the promises
+   getID
+       .then(IDs => {
+   	console.log(IDs);
+       return getRecipe(IDs[2]);
+   })
+       .then(recipe => {
+       console.log(recipe);
+       return getRelated('Jonas')
+   })
+       .then(recipe => {
+       console.log(recipe);
+   })
+       .catch(error => {
+       console.log('ERROR!!');
+   });
+   ```
+
+2. Async / Await (cont... from code above)
+
+   ```javascript
+   // consumes the promises without any call backs
+   // await can only run with async function.
+   
+   async function getRecipeAW() {
+       const IDs = await getIDs;
+       console.log(IDs);
+       const recipe = await getRecipe(IDs[2]);
+       console.log(recipe);
+       const related = await getReleated('Jonas schmed');
+       console.log(related);
+       
+       return recipe;
+   }
+   
+   getRecipeAW().then(result => {
+       console.log(`${result} is the best ever`);
+   });
+   ```
+
+   
+
+# Backend NODE JS
+
+1. Command line interface
+
+   a utility to type commands to your computer rather than clicking
+
+   
+
+   ```
+   ls => list 
+   cd => change directory
+   mkdir => make directory
+   touch => create file
+   rm => removing/delete file file
+   rm -rf => removing/delete all child directories (force)
+   ```
+
+2. V8 Javaascript Engine
+
+   - Processors 
+
+     
+
+   - Machine Code
+
+   - C++
+
