@@ -2173,6 +2173,15 @@ var stringValue = “hello world”;
 
 # Backend NODE JS
 
+**WEBSERVER CHECKLIST**
+
+- Better ways to organize our code into reusable pieces
+- ways to deal with files
+- ways to deal with databases
+- the ability to communicate over the internet
+- the ability to accept request and send resonses (in the standard format)
+- a way to deal with work that takes a long time
+
 1. Command line interface
 
    a utility to type commands to your computer rather than clicking
@@ -2188,13 +2197,1412 @@ var stringValue = “hello world”;
    rm -rf => removing/delete all child directories (force)
    ```
 
-2. V8 Javaascript Engine
+2. V8 Javascript Engine
 
    - Processors 
 
-     
+     - machine in a small parts
+
+     - instructions/language for processors: 
+
+       — IA-32
+
+       — x86-64
+
+       — ARM
+
+       — MIPS
 
    - Machine Code
 
+     - Every program you run on your computer has been converted (compiled) into machine code
+
+     - ![img](/Users/denmercs/Library/Application Support/typora-user-images/image.png)
+
+     - Levels of abstractions
+
+       ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190308165854695.png)
+
+       
+
    - C++
 
+     — node is written in C++
+
+   - Ecmascript: The standard javascript is based on.
+
+   - Javascript Engine
+
+     — it should follow the ecmascript standard. A program that converts javascript code into something the computer processor can understand.
+
+# V8 Javascript Engine
+
+- Adding features to Javascript
+
+  - ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190308171601675.png)
+
+    NOTE: you can call c++ methods/codes to your javascript, thus making the javascript more powerful!
+
+- The Node Core
+
+  - ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190308173327657.png)
+
+    Client-Server Model of Computing
+
+  - ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190308173819063.png)
+
+  - What does the javascript need to manage a server?
+
+    - Better ways to organize our code into reusable pieces
+    - Ways to deal with files
+    - Ways to deal with databases
+    - The ability to communicate over the internet
+    - The ability to accept request and send responses (standard format)
+    - A way to deal with work that takes a long time
+
+  - The C++ Core
+
+  - The Javscript Core
+
+    - Node.js has a lot of javascript wrappers for c++ features
+
+- Running Node.js
+
+  ​	Modules - a resusable block of code whose existence does not accidentally impact other code. 
+
+  ​	Common JS modules - agreed upon standard for how code modules should be structured. 
+
+- First Class Functions: 
+
+  — everything you can do with other types you can do with functions. You can use functions like strings, numbers, etc. (i.e. pass them around, set variables equals to them, put them in arrays, and more)
+
+- Function Expression: 
+
+  — a block of code that results in a value
+
+  — function expressions are possible in Javascript because functions are a first class.
+
+- Invoke 
+
+  — run the function
+
+  — we can also say 'call' the function
+
+- Objects and Objects literal
+
+  - Name/value pair: — a name which maps to a value
+
+    ```javascript
+    address = "100 Main St.";
+    ```
+
+  - Object: A collection of name/value pairs
+
+    ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190308191317528.png)
+
+  - Object Literal:
+
+    — name/value pairs separated by commas and surrounded by commas and surrounded by curly braces.
+
+    ```javascript
+    {
+        street: 'main',
+        number, 100,
+        apartment: 
+        {
+            floor: 3,
+            number: 301
+        }
+    }
+    ```
+
+  - Prototypal Inheritance
+
+    — Inheritance: one object gets access to the properties and methods of another object.
+
+    ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190308193046437.png)
+
+  - Ways in creating a object
+
+    — Class
+
+    — Function constructors: a normal functions that is used to construct objects. The 'this' variable points a new empty objects, and that objects is returned from the function automatically.
+
+    ```javascript
+    function Person(firstName, lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    
+    Person.prototype.greet = function() {
+        console.log('Hello, ' + this.firstName + ' ' + this.lastName);
+    };
+    
+    var john = new Person('John', 'Doe');
+    
+    
+    ```
+
+  - By Reference / By value
+
+    - Primitive: A type of data that represents a single value like a number or a string. In other words not an object.
+
+    - Passing by value
+
+      ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190308194145844.png)
+
+      ```javascript
+      // passing by value
+      function change(b) {
+          b = 2;
+      }
+      
+      var a = 1;
+      change(a);
+      console.log(a);
+      ```
+
+      
+
+    - Passing by reference (usually objects)
+
+      ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190308194309709.png)
+
+      
+
+    ```javascript
+    // passing by reference
+    function changeObj(d) {
+        d.prop1 = function(){};
+        d.prop2 = {};
+    }
+    
+    var c = {};
+    c.prop1 = {};
+    changeObj(c);
+    console.log(c);
+    ```
+
+  - Immediately Invoked Function Expression (IIFE)
+
+    - Scope: where in code you have access to particular variable or function.
+
+    ```javascript
+    var firstName = 'Jane';
+    
+    (function() {
+    	var firstName = 'John';
+        console.log(firstName);
+    })();
+    
+    console.log(firstName);
+    
+    // john --> first
+    // jane
+    ```
+
+  - How do node modules work?
+
+    ```javascript
+    // What happens at the back end of the v8 engine
+    // Function scope
+    (function (exports, require, module, __filename, __dirname) {
+        var greet = function() {
+            console.log('Hello!');
+        };
+        module.exports = greet;
+    })
+    
+    fn(module.exports, require, module, filename, dirname);
+    return module.exports;
+    ```
+
+    — require is a function that you pass a 'path' too
+
+    — module.exports is what the require functions returns
+
+    — this works your code is actually wrapped in a function that is given these things as function parameters
+
+    — if it can't find a .js file then it will look for a folder and then a index.js
+
+  - JSON
+
+    - Javascript object notation is a standard for structuring data that is inspired by javascript object literals. Javascript engines are built to understand it.
+
+    ```javascript
+    {
+        "firstname" : "John",
+        "lastname" : "Doe",
+        "address" : {
+            "street" : "101 Main st.",
+            "city" : "NYC"
+        }
+    }
+    ```
+
+  - Module Patterns
+
+    ```javascript
+    // other file (greet1.js)
+    module.exports = function() {
+        console.log('Hello World');
+    }; 
+    
+    // other file (greet2.js)
+    module.exports.greet = function() {
+        console.log('Hello World!');
+    }
+    
+    // other file (greet3.js)
+    function Greetr() {
+        this.greeting = 'Hello World!!!';
+        this.greet = function() {
+            console.log(this.greeting);
+        }
+    }
+    module.exports = new Greetr();
+    
+    // other file (greet4.js)
+    function Greetr() {
+        this.greeting = 'Hello World!!!';
+        this.greet = function() {
+            console.log(this.greeting);
+        }
+    }
+    module.exports = Greetr;
+    
+    //REAVELING MODULE PATTERN
+    // other file (greet5.js)
+    var greeting = "Hello Pattern 5";
+    
+    function greet() {
+        console.log(greeting);
+    }
+    
+    module.exports = {
+        greet: greet
+    }
+    
+    //app.js
+    var greet = require('./greet1');
+    greet();
+    
+    var greet2 = require('./greet2').greet;
+    greet2();
+    
+    var greet3 = require('./greet3');
+    greet3.greet();
+    greet3.greeting = 'Changed hello world!';
+    
+    var greet3b = require('./greet3');
+    greet3b.greet(); // The same reference to the memory. Only called once!ew
+    
+    var Greet4 = require('./greet4');
+    var grtr = new Greet4();
+    grtr.greet();
+    
+    var greet5 = require('./greet5').greet;
+    greet5();
+    
+    
+    ```
+
+    Revealing Module Pattern
+
+    - Exposing only theproperties andm ethods you want via an returned object. A very common and clean way to structure and protect code within modules
+
+  - Exports vs Module Exports
+
+    - ```javascript
+      (function (exports, require, module, __filename, __dirname) {
+          var greet = function() {
+              console.log('Hello!');
+          };
+          module.exports = greet;
+      })
+      
+      fn(module.exports, require, module, filename, dirname);
+      return module.exports;
+      ```
+
+      NOTE: exports is a shorthand of module.export. 2 variables pointing the same object in memory.
+
+      ```javascript
+      // greet1
+      exports = function() {			// it was pointed to a new variable (different 
+          							// object which is empty)
+          console.log('Hello');
+      }
+      
+      console.log(exports); // [Function]
+      console.log(module.exports); // { } --> empty object
+      
+      // greet2
+      exports.greet = function() {
+          console.log('Hello too!');
+      }
+      
+      console.log(exports);
+      console.log(module.exports);
+      
+      //app.js
+      var greet = require('./greet'); 	// { greet: [Function] }	
+      var greet2 = require('./greet2');	// { greet: [Function] }	
+      ```
+
+      Mutate: adding a method or property to an object.
+
+    - Node Native Module
+
+      — it is advisable not to used the native variables names of the module but it will not affect at all. There is a native methods/names javascript in the node.js were you can call. 
+
+- Module and ES6
+
+  ```javascript
+  //greet.js
+  export function greet() {
+      console.log('hello');
+  }
+  
+  //app.js
+  import * as greetr from 'greet'; 
+  greetr.greet();
+  ```
+
+**EVENT and EVENT EMITTER**
+
+- Event: something that has happen in the app that we can respond to. In Node, we actually talk about two different kind of events.
+
+  ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190310173339294.png)
+
+  NOTE: the libuv is sending events to javascript.
+
+- Javascript Side:
+
+   
+
+  ```javascript
+  // Object Property and method
+  var obj = {
+      greet: 'Hello'
+  }
+  
+  console.log(obj.greet);
+  console.log(obj['greet']);
+  
+  var prop = "greet";
+  console.log(obj[prop]);
+  
+  // functions and array
+  var arr = [];
+  
+  arr.push(function() {
+      console.log('Hello world 1');
+  });
+  arr.push(function() {
+      console.log('Hello world 2');
+  });
+  arr.push(function() {
+      console.log('Hello world 3');
+  });
+  
+  arr.forEach(function(item) {
+      item();			// you can just invoke this since it's and item the (the console log)
+  });
+  
+  ```
+
+- The Node Emitter Module
+
+  ```javascript
+  /** Making a Event Emitter **/
+  
+  // emitter.js
+  function Emitter() {
+      this.events = { };
+  }
+  
+  Emitter.prototype.on = function(type, listener) {
+      this.events[type] = this.event[type] || [];
+      this.events[type].push(listener);
+  }
+  
+  Emitter.prototype.emit = function(type) {
+      if (this.events[type]) {
+          this.events[type].forEach(function(listerner) {
+  			listener();
+      	});
+      }
+  }
+  
+  module.exports = Emitter;
+  
+  
+  //app.js
+  var Emitter = require('./emitter');
+  var emtr = new Emitter();
+  
+  emtr.on('greet', function() {
+      console.log('somewhere, someone said hello');
+  });
+  
+  emtr.on('greet', function() {
+      console.log('A greeting occured');
+  });
+  
+  console.log('Hello!');
+  emtr.emit('greet');
+  
+  ```
+
+  - Event listener: a code that responds to an event. The listerner will be a function in javascript
+
+- Node Event Emitter
+
+  ```javascript
+  /** Native NODE Modules **/
+  
+  
+  //app.js
+  var Emitter = require('events');
+  
+  var emtr = new Emitter();
+  
+  emtr.on('greet', function() {
+      console.log('somewhere, someone said hello');
+  });
+  
+  emtr.on('greet', function() {
+      console.log('A greeting occured');
+  });
+  
+  console.log('Hello!');
+  emtr.emit('greet');
+  
+  /*
+  	Hello!
+  	somewhere, someone said hello
+  	A greeting occured
+  */
+  
+  // DEALING WITH MAGIC STRINGS IN THE EVENT
+  
+  // config.js
+  module.exports = {
+      events: {
+          GREET: 'greet'
+      }
+  }
+  
+  //app.js
+  var Emitter = require('events');
+  var eventConfig = require('./config').events;
+  
+  var emtr = new Emitter();
+  
+  emtr.on(eventConfig.GREET, function() {
+      console.log('somewhere, someone said hello');
+  });
+  
+  emtr.on(eventConfig.GREET, function() {
+      console.log('A greeting occured');
+  });
+  
+  console.log('Hello!');
+  emtr.emit(eventConfig.GREET);
+  ```
+
+  - Magic String: a string that has some special meaning in our code. This is bad because it makes it easy for a typo to cause a bug, and ahrd for tools to help us find it.
+
+OBJECT.CREATE and PROTOTYPE
+
+```javascript
+var person = {
+    firstname: '',
+    lastname: '',
+    greet: function() {
+        rturnt his.firstname + ' ' + this.lastname;
+    }
+}
+
+var john = Object.create(person);
+john.firstname = 'John';
+john.lastname = 'Doe';
+
+var jane = Object.create(person);
+john.firstname = 'Jane';
+john.lastname = 'Doe';
+
+```
+
+![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190310184336915.png)
+
+
+
+```javascript
+//apps.js
+
+var EventEmitter = require('events');
+var util = require('util');
+
+function Greetr() {
+    this.greeting = 'Hello world!';
+}
+
+util.inherits(Greetr, EventEmitter);
+Greetr.prototype.greet = function(data) {
+    console.log(this.greeting + ': ' + data);
+    this.emit('greet', data);
+}
+
+var greeter1 = new Greetr();
+greeter1.on('greet', function() {
+    console.log('Someone greeated!' + data);
+});
+
+greeter1.greet('Tony'); // someone greated Tony!
+
+// ES6
+'use strict'
+var EventEmitter = require('events');
+var util = require('util');
+
+class Greetr extends EventEmitter {
+    constructor() {
+        super();
+        this.greeting = 'Hello world';
+    }
+    greet(data) {
+        console.log(`${this.greeting}: ${data})`;
+        this.emit('greet', data);	
+    }
+}
+
+var greeter1 = new Greetr();
+greeter1.on('greet', function() {
+    console.log('Someone greeated!' + data);
+});
+
+greeter1.greet('Tony'); 
+// someone greated Tony!
+```
+
+Syntactic Sugar: A feature that only changes how you type something, but nothing changes under the hood.
+
+```javascript
+// ES6
+'use strict';
+
+class Person {
+    constructor(firstName, lastName) {
+		this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    
+    greet() {
+        console.log('Hello, ' + this.firstName + ' ' + this.lastName)
+    }
+}
+
+// ES5
+function Person(firstName, lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+}
+
+Person.prototype.greet = function() {
+    console.log('Hello, ' + this.firstName + ' ' + this.lastName);
+};
+
+var john = new Person('John', 'Doe');
+
+
+
+```
+
+**ES6**
+
+babeljs.io - converts the ES6 to an older ES5.
+
+Template literal: a way to concatenate strings in javascript. Easier to work with than a bunch of strings concatenated with '+'.
+
+```javascript
+//apps.js
+var name = "John Doe";
+
+var greet = "Hello" + name;
+var greet2 = `hello ${name}`;
+
+console.log(greet);
+console.log(greet2);
+```
+
+**Javascript .call and .apply**
+
+```javascript
+var obj = {
+    name: "John Doe",
+    greet: function() {
+        console.log(`Hello ${this.name}`);
+    }
+}
+
+obj.greet(); // Hello John Doe
+obj.greet.call({ name: 'Jane Doe'}) // this object will changed into 'Jane Doe'. Borrowing 
+									// the function
+
+obj.greet.apply( name: 'Jane Doe', [param, param2]) // the difference is the array
+```
+
+JAVASCRIPT IS ASYNCHRONOUS
+
+- Asynchronous: More than one process running simultaneously. Node does things asynchronously and V8 does not.
+
+- Synchronous: one process executing at a time. Javascript is synchronous. Think of it as only one line of code executing at a time. NodeJS is asynchronous.
+
+- Callback: a function passed to some other function, which we assume will be invoked at some point. The function 'calls back' invoking the function you give it when it is done doing its work.
+
+  ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190311210344184.png)
+
+  ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190311210603380.png)
+
+- Event Driven Non-Blocking I/O in v8 Javascript
+
+  - Non-Blocking: doing other things without stopping yourprogramming from running.
+
+  - Buffer: a temporary holding spot for data being moved from one place to another. Intentionally limit size.
+
+  - Stream: a sequence of data made available over time. Pieces of data that eventually combine into a whole.
+
+    ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190311211521806.png)
+
+    NOTE: same as watching a video. It buffers to continue to stream.
+
+  - Bindary data: data stored in binary (sets of 1s and 0s).
+
+  - Character set: a representation of characters as numbers. Each character gets a number. Unicode and ASCII are character sets.
+
+    ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190311212956248.png)
+
+  - Character encoding: How character are stored in binary. Numbers are converted and stored in binary.
+
+    ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190311212321818.png)
+
+    NOTE: UTF-8 means 8 sets of data.
+
+  - Buffer
+
+    ```javascript
+    var buf = new Buffer('Hello', 'utf8'); 
+    console.log(buf); // <Buffer 48 65 6c 6c 6f>
+    console.log(buf.toString());
+    console.log(buf.toJSON());
+    console.log(buf[2]);
+    buf.write('wo');
+    console.log(buf.toString()); // wollo
+    
+    /* Unusual to deal with buffer in development */
+    ```
+
+  - ES6 Typed Arrays 
+
+    ```javascript
+    var buffer = new ArrayBuffer(8); //raw binary data
+    var view = new Int32Array(buffer);
+    view[0] = 5;
+    view[1] = 15;
+    view[2] = 30; // it will not show or store since it's only 2 data needed (binary)
+    console.log(view); // Int32Array { '0' : 5, '1' : 15}
+    
+    
+    ```
+
+    Byte: 8 bits example 0010100
+
+  - Callbacks
+
+    ```javascript
+    function greet(callback) {
+        console.log('Hello!');
+        var data = {
+            name: 'John Doe'
+        };
+        callback();
+    }
+    
+    greet(function(data) {
+        console.log('The callback was invoked!');
+        console.log(data);
+    })
+    
+    greet(function(data) {
+        console.log('A different callback was invoked!');
+        console.log(data.name);
+    })
+    ```
+
+  - File and fs
+
+    ```javascript
+    // app.js
+    var fs = require('fs'); //filesystem
+    var greet = fs.readFileSync(__dirname + '/greet.txt', 'utf8');
+    console.log(greet);
+    
+    var greet2 = fs.readFile(__dirname + '/greet.txt', 'utf8', function(err, data){
+        console.log(data);
+    });
+    console.log('Done!');
+    
+    //greet.txt
+    hello world!
+    ```
+
+    Error first callback: call backs take an error object as their first parameter. Null if no error, otherwise will contain an object defining the derror. This is a standard so we know in what order to place our parameters for our callbacks.
+
+  STREAM
+
+  - a piece of data being sent through a stream. Data is split in chunks and streamed.
+
+  - Abstract class: a type of contructor you never work directly with, but inherit from. We create new custom objects which inherit from the abstract base class.
+
+    ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190312001259524.png)
+
+    ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190312001359801.png)
+
+    
+
+  ```javascript
+  var fs = require('fs');
+  
+  var readable = fs.createReadStream(__dirname + '/greet.txt', {encoding: 'utf8', highWaterMark: 32 * 1024});
+  
+  var writable = fs.createWriteStream(__dirname + '/greetcopy.txt');
+  
+  readable.on('data', function(chunk) {
+      console.log(chunk);
+      writable.write(chunk);
+  });
+  ```
+
+  PIPE
+
+  - connecting two streams by writing to one stream what is being read from another. In Node you pipe from a readable stream to a writeable stream.
+
+    ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190312005043116.png)
+
+    
+
+  ```javascript
+  var fs = require('fs');
+  var zlib = require('zlib'); //for compressing files
+  
+  
+  var readable = fs.createReadStream(__dirname + '/greet.txt');
+  
+  var writable = fs.createWriteStream(__dirname + '/greetcopy.txt');
+  
+  var gzip = zlib.createGzip(); // this create a compress file like 'zip files'
+  
+  var compressed = fs.createWriteStream(__dirname + '/greet.txt.gz');
+  
+  readable.pipe(writable); // this return the value of the function
+  readable.pipe(gzip).pipe(compressed); // method chaining
+  ```
+
+  Method chaining: a method returns an object so we can keep calling more methods. Sometimes it returns the parent object (called cascading) and sometimes some other object. 
+
+# HTTP and being a web server
+
+- Protocol: a set of rule two sides agree on to use when communicating. Both the client and server are programmed to understand and use that particular set of rules. It's similar to two people from different countries agreeing on a language to speak in.
+
+  ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190312011159685.png)
+
+  ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190312011356708.png)
+
+  
+
+  PORT: once a computer receives a packet, how it knows what program to send it to. When a program is setup on the operating system to receive packets from a particular port, it is said that the program is 'listening' to that port.
+
+  ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190312012622614.png)
+
+  
+
+  HTTP: a set of rules (and a format) for data being transferred on the web. Stands for hypertext transfer protocol'. It's a format (of various) defining data being transferred via TCP/IP.
+
+  MIME type: a standard for specifying the type of data being sent. Stands for multipurpose internet mail extensions. 
+
+  
+
+  HTTP_PARSER (Parser - Break them up)
+
+  **BUILDING A WEBSERVER**
+
+  ```javascript
+  var http = require('http');
+  http.createServer(function(req, res) {
+      res.writeHead(200, { 'Content-Type' : 'text/plain'});
+      res.end('Hello World!\n'); //last thing that i'm sending
+  }).listen(1337, '1270.0.0.1');
+  ```
+
+- Synchronous request example
+
+  ```html
+  // index.html
+  <html>
+      <head>
+          <title>HTML OUTPUT</title>
+      </head>
+      <body>
+          <h1> Hello World </h1>
+      </body>
+  </html>
+  ```
+
+  ```javascript
+  var http = require('http');
+  var fs = require('fs');
+  
+  http.createServer(function(req, res) {
+      res.writeHead(200, { 'Content-Type' : 'text/html'});
+      var html = fs.readFileSync(__dirname + '/index.htm', 'utf8'); // read synchronouly
+      res.end(html);
+      var message = 'Hello world...';
+      html = html.replace('{Message}', message);
+  }).listen(1337, '1270.0.0.1'); // Hello world...
+  ```
+
+TEMPLATE
+
+- text designed to be the basis for the final text or content after being processed. There's usually some specific template language, so the template system know how to replace placeholders with real values.
+
+- Asynchronous request example:
+
+  ```javascript
+  var http = require('http');
+  var fs = require('fs');
+  
+  http.createServer(function(req, res) {
+      res.writeHead(200, { 'Content-Type' : 'text/html'});
+  	fs.createReadStream(__dirname + '/index.htm').pipe(res); // read asynchronouly
+  }).listen(1337, '1270.0.0.1'); // Hello world...
+  
+  /** USE STREAMS WHENEVER YOU CAN! **/
+  ```
+
+  API's and End points
+
+  - API: set of tools for building a software application. Stands for application programming interface. On the web the tools are usually made available via a set of URLs which accept and send only data via HTTP and TCP/IP.
+  - Endpoint: one url in a web api. Sometiimes that endpoint(url) does multiple thing by making choices based on the HTTP request headers.
+
+JSON
+
+- ```javascript
+  var http = require('http');
+  var fs = require('fs');
+  
+  http.createServer(function(req, res) {
+      res.writeHead(200, {'Content-Type' : 'Application/json'});
+      var obj = {
+          firstname: 'John',
+          lastname: 'Doe'
+      };
+      res.end(JSON.stringify(obj));
+  }).listen(1337, '127.0.0.1');
+  ```
+
+  Serialize
+
+  - Translating an object into a format that can be stored or transferred. JSON, CSV, XML, and others are popular. 'Deserialize' is the opposite (converting the format back into an object).
+
+  Routing
+
+  - Mapping http requests to content. Whether actual file that exist on the server, or not. 
+
+  ```javascript
+  var http = require('http');
+  var fs = require('fs');
+  
+  http.createServer(function(req, res) {
+      if(req.url === '/') {
+          fs.createReadStream(__dirname + 'index.htm').pipe(res);
+      }
+      
+  	if(req.url === '/api') {
+          res.writeHead(200, {'Content-Type' : 'Application/json'});
+          var obj = {
+              firstname: 'John',
+              lastname: 'Doe'
+          };
+          res.end(JSON.stringify(obj));        
+      }
+      else {
+          res.writeHead(404);
+  	    res.end();
+      }    
+  
+  }).listen(1337, '127.0.0.1');
+  ```
+
+  # PACKAGE
+
+  - code. managed and maintained with a package management system.
+
+  Package Management System
+
+  - software that automates installing and updating packages. Deals with twhat version you have or need and manage dependencies.
+
+  Dependency
+
+  - code that another set of code depends on to function. If you use that code in your app, it is dependency. You app depends on it. 
+
+  Versioning
+
+  - specifying what version of  a set of code this is. so others can track if a new version has come out. this allows to watch for new features, or to watch for 'breaking changes'. The word 'semantic' implies that something conveys meaning.
+  - Major.minor.patch 
+  - example: v 1.0.3 => (v. 1(major).0(minor).3(bugs fix)). 
+
+  NPM and NPM registry
+
+  - NPM registry is from the website npmjs.com
+
+    ```javascript
+    {
+        "name" : "nodejs-test-app",
+        "version" : "1.0.0",
+        "description" : "NodeJS Test App",
+        "main: : "app.js",
+        "scripts" : {
+            "test" : "echo \"Error: no test specified\" && exit 1"
+        },
+        "author" : "",
+        "license" : "ISC"
+    }
+    ```
+
+    ```javascript
+    npm install moment --save	// download the files which is moment. Save the reference on the dependency.
+    ```
+
+    NOTE: You can get the files and just install them afterwards
+
+    ```javascript
+    var moment = require('moment');
+    console.log(moment().format("ddd, hA"));
+    // Wed, 11am
+    ```
+
+    Example: npm install jasmine-node —save-dev  (this will save into dev dependencies)
+
+    # Express
+
+    - installing express and making it easier to build a web server
+
+    Environment variables: Global variables specific to the environment(server) our code is living in. Different servers can have different variables settings, and we can access those values in code.
+
+    ```javascript
+    var express = require("express");
+    var app = express();
+    
+    app.listen(process.env.PORT, process.env.IP, function() {
+        console.log('App server is running');
+    });
+    ```
+
+    Http method: specifies the type of action the request wishes to make. Get, post, delete, and others also called verbs.
+
+    ```javascript
+    var express = require("express");
+    var app = express();
+    
+    var port = process.env.PORT || 3000;
+    
+    app.listen(port, process.env.IP, function() {
+        console.log('App server is running');
+    });
+    
+    app.get('/', function(req, res) {
+        res.send('<html><head></head><body><h1>Hello World</h1></body></html>');
+    });
+    
+    app.get('/api', function(req, res) {
+        res.json({ firstname: 'John', lastname: 'Doe'});
+    });
+    ```
+
+    
+
+    **Routing**
+
+    ```javascript
+    var express = require("express");
+    var app = express();
+    
+    var port = process.env.PORT || 3000;
+    
+    app.listen(port, process.env.IP, function() {
+        console.log('App server is running');
+    });
+    
+    app.get('/', function(req, res) {
+        res.send('<html><head></head><body><h1>Hello World</h1></body></html>');
+    });
+    
+    app.get('/person/:id', function(req, res) {
+        res.send('<html><head></head><body><h1>Person: ' + req.params.id + '</h1></body></html>');
+    });
+    
+    app.get('/api', function(req, res) {
+        res.json({ firstname: 'John', lastname: 'Doe'});
+    });
+    ```
+
+    **Static files and middleware**
+
+    - In the case of Express, sitting between the request and the response.
+
+      Static
+
+      - files not processed by code in any way. Example: html, css, and image file are static files.
+
+    Template and template engines
+
+    ```javascript
+    app.set('view engine', 'jade');
+    
+    /** Example EJS (ejs.co) **/
+    
+    ```
+
+    
+
+**Queryingstring and post parameters**
+
+ - ```javascript
+   // querying data
+   
+   GET/$id=4&page=3http/1.1
+   Host: www.learnwebdev.net
+   cookie: username=abc; name=tony
+   
+   // hosting data
+   POST/HTTP/1.1
+   Host: www.learnwebdev.net
+   content-type: application/x-www-form-urlencoded
+   cookie: num=4;page2
+   
+   username=Tony&password=pwd
+   
+   // JSON
+   POST/HTTP/1.1
+   Host: www.learnwebdev.net
+   content-type:application/json
+   cookie:num=4;page=2
+   
+   {
+       "username": "Tony",
+       "password": "pwd"
+   }
+   
+   /** Need some middleware to process the data. **/
+   ```
+
+   
+
+  - ```javascript
+    var express = require("express");
+    var app = express();
+    
+    var port = process.env.PORT || 3000;
+    
+    /** Middleware **/
+    app.use('/assets', express.static(__dirname + '/public'));
+    app.use('/', function(req, res, next) {
+       console.log('Request URL: ' + req.url);
+       next();
+    });
+    
+    app.set('view engine', 'ejs');
+    
+    app.listen(port, process.env.IP, function() {
+        console.log('App server is running');
+    });
+    
+    app.get('/', function(req, res) {
+        res.render('index');
+    });
+    
+    app.get('/person/:id', function(req, res) {
+        res.render('person', {ID: req.params.id, Qstr: req.query.qstr}); // query string
+    });
+    
+    app.get('/api', function(req, res) {
+        res.json({ firstname: 'John', lastname: 'Doe'});
+    });
+    ```
+
+    
+
+    ```html
+    <html>
+        <head>
+            <title>App Test</title>
+            <link href="/assets/style.css" type="text/css" rel="stylesheet"></link>
+        </head>
+        <body>
+            <h1> Person: <%= ID %></h1>
+            <h2> QueryString Value: <%= Qstr %></h2>
+        </body>
+    </html>
+    ```
+
+    Middleware
+
+    - Body-parser - need something to parse the body and response.
+
+    ```javascript
+    //app.js
+    var express = require("express");
+    var app = express();
+    var bodyParser = require("body-parser");
+    
+    var urlencodedParser = bodyParser.urlencoded({extended: false});
+    var port = process.env.PORT || 3000;
+    var jsonParser = bodyParser.json();
+    
+    /** Middleware **/
+    app.use('/assets', express.static(__dirname + '/public'));
+    app.use('/', function(req, res, next) {
+       console.log('Request URL: ' + req.url);
+       next();
+    });
+    
+    app.set('view engine', 'ejs');
+    
+    app.listen(port, process.env.IP, function() {
+        console.log('App server is running');
+    });
+    
+    app.get('/', function(req, res) {
+        res.render('index');
+    });
+    
+    app.get('/person/:id', function(req, res) {
+        res.render('person', {ID: req.params.id, Qstr: req.query.qstr});
+    });
+    
+    app.post('/person', urlencodedParser, function(req, res) {
+        res.send('Thank you!');
+        console.log(req.body.firstname);
+        console.log(req.body.lastname);
+    });
+    
+    // getting it from the post
+    app.get('/api', function(req, res) {
+        res.json({ firstname: 'John', lastname: 'Doe'});
+    });
+    
+    // getting it from JSON
+    app.post('/personJson', jsonParser, function(req, res) {
+        res.send('Thank you for the JSON data!');
+        console.log(req.body.firstname);
+        console.log(req.body.lastname);
+    });
+    //post
+    
+    //index.ejs
+    <html>
+        <head>
+            <title>App Test</title>
+            <link href="assets/style.css" type="text/css" rel="stylesheet"></link>
+            <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+        </head>
+        <body>
+            <h1> Hello World Test</h1>
+            <form method="post" action="/person">
+                FirstName: 
+                <input type="text" id="firstname" name="firstname" /></br>
+                lastname:
+                <input type="text" id="lastname" name="lastname" /></br>
+                <input type="submit" value="submit">
+            </form>
+            <script>
+                $.ajax({
+                    type: "POST",
+                    url: "/personJson",
+                    data: JSON.stringify({firstname: 'Jane', lastname: 'Doe'}),
+                    dataType: 'json',
+                    contentType: 'application/json'
+                });
+            </script>
+        </body>
+    </html>
+    ```
+
+    REST: An architectural style for building APIs
+
+    - stands for 'representational state tranfer'. We decide that http verbs and URLs mean something.
+
+    ```javascript
+    var express = require("express");
+    var app = express();
+    var bodyParser = require("body-parser");
+    
+    var urlencodedParser = bodyParser.urlencoded({extended: false});
+    var port = process.env.PORT || 3000;
+    var jsonParser = bodyParser.json();
+    
+    /** Middleware **/
+    app.use('/assets', express.static(__dirname + '/public'));
+    app.use('/', function(req, res, next) {
+       console.log('Request URL: ' + req.url);
+       next();
+    });
+    
+    app.set('view engine', 'ejs');
+    
+    app.listen(port, process.env.IP, function() {
+        console.log('App server is running');
+    });
+    
+    app.get('/', function(req, res) {
+        res.render('index');
+    });
+    
+    app.get('/person/:id', function(req, res) {
+        res.render('person', {ID: req.params.id, Qstr: req.query.qstr});
+    });
+    
+    // getting it from the post
+    app.post('/person', urlencodedParser, function(req, res) {
+        res.send('Thank you!');
+        console.log(req.body.firstname);
+        console.log(req.body.lastname);
+    });
+    
+    // getting it from JSON
+    app.post('/personJson', jsonParser, function(req, res) {
+        res.send('Thank you for the JSON data!');
+        console.log(req.body.firstname);
+        console.log(req.body.lastname);
+    });
+    //post
+    
+    app.get('/api', function(req, res) {
+        res.json({ firstname: 'John', lastname: 'Doe'});
+    });
+    
+    /** Example of REST API **/
+    app.get('/api/person/:id', function(req, res) {
+        res.json({firstname: 'John', lastname: 'Doe'});
+    });
+    
+    app.post('/api/person', jsonParser, function(req, res) {
+        //save to the database
+    })
+    
+    app.delete('/api/person/:id', function(req, res) {
+        //delete from the database
+    })
+    
+    ```
+
+    STRUCTURING an app
+
+    - npm install express-generator -g
+    - express 'folder'
+    - npm install
+
+    # Databases
+
+    Relational database and sql.
+
+    ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190313125018368.png)
+
+    ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190313125058530.png)
+
+    ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190313125145263.png)
+
+    
+
+NODE and MySQL
+
+- npm install mysql
+
+NODE and NoSQL: 
+
+- a variety of technologies that are alternatives to tables and sql. One of those types is a document database. MongoDB is one of those.
+
+  ![img](/Users/denmercs/Library/Application Support/typora-user-images/image-20190313130523151.png)
+
+
+
+​	Mongoose
+
+ - ```javascript
+   /** setup schema first 
+   	npm install mongoose
+   	
+   **/
+   
+   var mongoose = require('mongoose');
+   mongoose.connect('url here');
+   
+   var Schema = mongoose.Schema;
+   var personSchema = new Schema ({
+       firstname: String,
+       lastname: String,
+       address: String
+   });
+   
+   var Person = mongoose.model('Person', personSchema);
+   
+   var john = Person({
+       firstname: 'John',
+       lastname: 'Doe', 
+       address: '555 Main St.';
+   })
+   
+   // save the user
+   john.save(function(err) {
+       if(err) throw err;
+       console.log('person saved!');
+   });
+   
+   var jane = Person({
+       firstname: 'Jane',
+       lastname: 'Doe',
+       address: '555 Main St.'
+   });
+   
+   // save the user
+   jane.save(function(err) {
+       if(err) throw err;
+       console.log('person saved!');
+   });
+   
+   app.use('/', function(req, res, next) {
+       console.log('Request Url: ' + req.url);
+       
+       //get all the users
+       Person.find({}, function(err, users) {
+           if (err) throw err;
+           
+           //object of all the users
+           console.log(users);
+       });
+       
+       next();
+   });
+   
+   
+   ```
+
+   
+
+
+
+​	
+
+​	
