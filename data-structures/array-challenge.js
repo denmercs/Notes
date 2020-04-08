@@ -139,6 +139,7 @@
 
     let productAll = [1,2,3,4];
 
+    // time complexity - O(n)
     function findProduct(arr){
         var result = []
         var left = 1, currentproduct;
@@ -160,6 +161,7 @@
         return result
       }
 
+    // time complexity - O(n)
     function findProductEfficient(arr) {
         let left = 1;
         let product = [];

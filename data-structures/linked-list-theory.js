@@ -80,16 +80,33 @@ class LinkedList {
     currentNode.nextElement = node;
     return this;
   }
+
+  searchNode(value) {
+    // [head] --> [data] --> [search] --> null
+    let currentNode = this.head;
+
+    while (currentNode !== null) {
+      if (currentNode.data === value) {
+        return true;
+      } else {
+        currentNode = currentNode.nextElement;
+      }
+    }
+    return false;
+  }
+
+  // delete at the head
+  // delete by search
+  // delete by tail
 }
 
-let list = new LinkedList();
-console.log(list.isEmpty());
-
-// for (let i = 0; i < 5; i++) {
-//   list = list.insertAtHead(i);
-// }
+let listHead = new LinkedList();
+let listTail = new LinkedList();
 
 for (let i = 0; i < 5; i++) {
-  list = list.insertAtTail(i);
+  list = list.insertAtHead(i);
+  listTail = listTail.insertAtTail(i);
 }
 list.printList();
+listTail.printList();
+console.log(list.searchNode(8));

@@ -13,6 +13,7 @@ class LinkedList {
   isEmpty() {
     return this.head === null;
   }
+
   printList() {
     if (this.isEmpty()) {
       console.log("Empty");
@@ -30,21 +31,60 @@ class LinkedList {
   }
 
   insertAtHead(data) {
-    // create node
+    // [data] --> [head]
     let node = new Node(data);
 
-    // move the node to the next element
     node.nextElement = this.head;
+
     this.head = node;
 
     return this;
   }
+
+  insertAtTail(data) {
+    let node = new Node(data);
+
+    // [head] --> [data] --> [data] --> [tail]
+
+    if (this.isEmpty()) {
+      this.head = node;
+      return this;
+    }
+
+    let currentNode = this.head;
+
+    while (currentNode.nextElement !== null) {
+      currentNode = currentNode.nextElement;
+    }
+
+    currentNode.nextElement = node;
+
+    return this;
+  }
+
+  searchNode(value) {
+    // [head] --> [data] --> [search] --> [tail]
+
+    let currentNode = this.head;
+
+    while (currentNode !== null) {
+      if (currentNode.data === value) {
+        return true;
+      }
+      currentNode = currentNode.nextElement;
+    }
+    return false;
+  }
 }
 
-let list = new LinkedList();
+let link = new LinkedList();
+let linkTail = new LinkedList();
 
 for (let i = 0; i < 5; i++) {
-  list.insertAtHead(i);
+  link = link.insertAtHead(i);
+  linkTail = linkTail.insertAtTail(i);
 }
 
-console.log(list.printList());
+link.printList();
+linkTail.printList();
+console.log(link.searchNode(3));
