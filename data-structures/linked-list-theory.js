@@ -96,17 +96,71 @@ class LinkedList {
   }
 
   // delete at the head
+  deleteAtHead() {
+    if (this.isEmpty()) {
+      return this;
+    }
+
+    let currentNode = this.head;
+
+    this.head = currentNode.nextElement;
+
+    return this;
+  }
+
   // delete by search
+  deleteBySearch(value) {
+    if (this.isEmpty()) {
+      return this;
+    }
+
+    let currentNode = this.head;
+
+    if (currentNode.data === value) {
+      currentNode = currentNode.nextElement;
+      return this;
+    }
+
+    while (currentNode.nextElement !== null) {
+      if (currentNode.nextElement.data === value) {
+        currentNode.nextElement = currentNode.nextElement.nextElement;
+      }
+      currentNode = currentNode.nextElement;
+    }
+    return this;
+  }
+
   // delete by tail
+  deleteByTail() {
+    if (this.isEmpty()) {
+      return this;
+    }
+
+    let currentNode = this.head;
+
+    if (currentNode.nextElement === null) {
+      this.deleteAtHead();
+      return this;
+    }
+
+    while (currentNode.nextElement.nextElement !== null) {
+      currentNode = currentNode.nextElement;
+    }
+    currentNode.nextElement = null;
+    return this;
+  }
 }
 
-let listHead = new LinkedList();
-let listTail = new LinkedList();
+let list = new LinkedList();
 
 for (let i = 0; i < 5; i++) {
   list = list.insertAtHead(i);
-  listTail = listTail.insertAtTail(i);
+  list = list.insertAtTail(i);
 }
 list.printList();
-listTail.printList();
-console.log(list.searchNode(8));
+list.deleteAtHead();
+list.printList();
+list.deleteBySearch(2);
+list.printList();
+list.deleteByTail();
+list.printList();
