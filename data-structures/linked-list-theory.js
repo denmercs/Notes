@@ -17,6 +17,7 @@ class Node {
 class LinkedList {
   constructor() {
     this.head = null;
+    this.count = 0;
   }
 
   isEmpty() {
@@ -78,6 +79,27 @@ class LinkedList {
     }
 
     currentNode.nextElement = node;
+    return this;
+  }
+
+  insertSearch(data, index) {
+    // create a new node
+    let node = new Node(data);
+
+    if (this.isEmpty()) {
+      return this;
+    }
+
+    let currentNode = this.head;
+
+    while (currentNode.nextElement !== null) {
+      if (this.count === index) {
+        currentNode.nextElement = node;
+      }
+      currentNode = currentNode.nextElement;
+      this.count++;
+    }
+
     return this;
   }
 
@@ -163,4 +185,6 @@ list.printList();
 list.deleteBySearch(2);
 list.printList();
 list.deleteByTail();
+list.printList();
+list.insertSearch(10, 1);
 list.printList();
