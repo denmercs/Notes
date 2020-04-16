@@ -133,3 +133,18 @@ class LinkedList {
     return this;
   }
 }
+
+class NodeDouble {
+  constructor(value) {
+    this.data = value;
+    this.previousElement = null;
+    this.nextElement = null;
+  }
+}
+
+class DoublyLinkedList {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+  }
+}
