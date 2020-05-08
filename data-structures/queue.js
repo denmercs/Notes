@@ -1,44 +1,38 @@
 /**
- * First in and first out
- * used widely in searching and sorting algorithm (breadth first search)
- *
- * enqueue
- * dequeue
- * getFront
- * isEmpty
- * size
+ * Queue --> First in, First Out
+ *  Time Complexity       Average       Worst       Worst(space)
+ *  Get, Search           O(n)          O(n)          O(n)
+ *  Insertion             O(1)          O(1)
  */
 
 class Queue {
   constructor() {
-    this.items = [];
+    this.queue = [];
   }
 
-  isEmpty() {
-    return this.items.length === 0;
-  }
-
-  getFront() {
-    if (!this.isEmpty()) {
-      return this.items[0];
-    } else {
-      return null;
-    }
-  }
-
-  size() {
-    return this.items.length;
-  }
-
-  enqueue(element) {
-    this.items.push(element);
+  enqueue(data) {
+    this.queue.push(data);
   }
 
   dequeue() {
-    if (this.isEmpty()) {
-      return null;
-    } else {
-      return this.items.shift();
+    this.queue.shift();
+  }
+
+  printQueue() {
+    let str = "";
+    for (let i = 0; i < this.queue.length; i++) {
+      str += this.queue[i] + "\n";
     }
+    return str;
   }
 }
+
+let myQueue = new Queue();
+myQueue.enqueue(2);
+myQueue.enqueue(3);
+myQueue.enqueue(9);
+myQueue.enqueue(1);
+console.log("Your queue is:\n" + myQueue.printQueue());
+
+myQueue.dequeue();
+console.log("Your queue after deletion is:\n" + myQueue.printQueue());
